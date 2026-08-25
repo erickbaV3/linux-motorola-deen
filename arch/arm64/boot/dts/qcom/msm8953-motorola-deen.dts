@@ -15,6 +15,7 @@
 	model = "Motorola One";
 	compatible = "motorola,deen", "qcom,msm8953";
 	chassis-type = "handset";
+	qcom,msm-id = <293 0>;
 	qcom,board-id = <0x4D 0xC100>;
 
 	battery: battery {
