@@ -18,6 +18,10 @@
 	qcom,msm-id = <293 0>;
 	qcom,board-id = <0x4D 0xC100>;
 
+	aliases {
+	serial0 = &uart_0;
+	};
+
 	battery: battery {
 		compatible = "simple-battery";
 
@@ -28,6 +32,9 @@
 	};
 
 	chosen {
+	
+		stdout-path = "serial0";
+
 		#address-cells = <2>;
 		#size-cells = <2>;
 		ranges;
@@ -155,6 +162,13 @@
 		drive-strength = <2>;
 		bias-pull-up;
 	};
+};
+
+&uart_0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart_console_active>;
+
+	status = "okay";
 };
 
 &usb3 {
