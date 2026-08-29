@@ -292,6 +292,13 @@
 	};
 };
 
+&sdhc_1 {
+	vmmc-supply = <&pm8953_l8>;
+	vqmmc-supply = <&pm8953_l5>;
+
+	status = "okay";
+};
+
 &uart_0 {
 //	pinctrl-names = "default";
 //	pinctrl-0 = <&uart_console_active>;
