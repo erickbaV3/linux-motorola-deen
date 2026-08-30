@@ -9,13 +9,40 @@
 #include "pm8953.dtsi"
 #include "pmi8950.dtsi"
 
-/delete-node/ &cont_splash_mem;
 /delete-node/ &qseecom_mem;
 
 / {
 	model = "Motorola One";
 	compatible = "motorola,deen", "qcom,msm8953";
 	chassis-type = "handset";
+
+	chosen {
+
+		stdout-path = "serial0";
+
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		framebuffer@90001000 {
+			compatible = "simple-framebuffer";
+			reg = <0 0x90001000 0 (720 * 1520 * 3)>;
+			width = <720>;
+			height = <1520>;
+			stride = <(720 * 3)>;
+			format = "r8g8b8";
+
+			power-domains = <&gcc MDSS_GDSC>;
+
+			clocks = <&gcc GCC_MDSS_AHB_CLK>,
+				 <&gcc GCC_MDSS_AXI_CLK>,
+				 <&gcc GCC_MDSS_VSYNC_CLK>,
+				 <&gcc GCC_MDSS_MDP_CLK>,
+				 <&gcc GCC_MDSS_BYTE0_CLK>,
+				 <&gcc GCC_MDSS_PCLK0_CLK>,
+				 <&gcc GCC_MDSS_ESC0_CLK>;
+		};
+	};
 
 	gpio-keys {
 		compatible = "gpio-keys";
