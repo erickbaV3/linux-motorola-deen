@@ -306,7 +306,16 @@
 	status = "disabled";
 };
 
+&hsusb_phy {
+	vdd-supply = <&pm8953_l3>;
+	vdda-pll-supply = <&pm8953_l7>;
+	vdda-phy-dpdm-supply = <&pm8953_l13>;
+
+	status = "okay";
+};
+
 &usb3 {
+	dr_mode = "peripheral";
 	status = "okay";
 };
 
