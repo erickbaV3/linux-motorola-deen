@@ -135,19 +135,6 @@
 &tlmm {
 	gpio-reserved-ranges = <1 2>, <96 4>, <111 1>, <126 1>;
 
-	nfc_irq_default: nfc-irq-state {
-		pins = "gpio17";
-		bias-pull-down;
-		drive-strength = <2>;
-	};
-
-	nfc_pwr_default: nfc-pwr-state {
-		pins = "gpio16";
-		bias-pull-down;
-		output-low;
-		drive-strength = <2>;
-	};
-
 	panel_default: panel-default-state {
 		pins = "gpio61";
 		function = "gpio";
@@ -156,18 +143,6 @@
 		output-high;
 	};
 
-	nfc_firm_default: nfc-firm-state {
-		pins = "gpio62";
-		bias-pull-down;
-		output-low;
-		drive-strength = <2>;
-	};
-
-	ts_reset: ts-reset-state {
-		pins = "gpio64";
-		function = "gpio";
-		drive-strength = <2>;
-		bias-pull-up;
 	};
 };
 
