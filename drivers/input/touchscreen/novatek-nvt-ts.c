@@ -247,22 +247,31 @@ static int nvt_ts_initial_power_on_and_register_inputdev(struct nvt_ts_data *dat
 				 data->buf, NVT_TS_PARAMS_SIZE);
 	gpiod_set_value_cansleep(data->reset_gpio, 1); /* Put back in reset */
 	regulator_bulk_disable(ARRAY_SIZE(data->regulators), data->regulators);
-	if (error)
-		return error;
 
-	width  = get_unaligned_be16(&data->buf[NVT_TS_PARAMS_WIDTH]);
-	height = get_unaligned_be16(&data->buf[NVT_TS_PARAMS_HEIGHT]);
-	data->max_touches = data->buf[NVT_TS_PARAMS_MAX_TOUCH];
-	irq_type = data->buf[NVT_TS_PARAMS_IRQ_TYPE];
+	/* ======================================================== */
+	/* HACK TEST Ignore read error from motorola firmware */
+	if (error) {
+		dev_warn(dev, "Cannot read 0x78. Forcing manual values!\n");
+		width = 720;
+		height = 1520;
+		data->max_touches = 10;
+		irq_type = 1; /* IRQF_TRIGGER_FALLING */
+	} else {
+		width  = get_unaligned_be16(&data->buf[NVT_TS_PARAMS_WIDTH]);
+		height = get_unaligned_be16(&data->buf[NVT_TS_PARAMS_HEIGHT]);
+		data->max_touches = data->buf[NVT_TS_PARAMS_MAX_TOUCH];
+		irq_type = data->buf[NVT_TS_PARAMS_IRQ_TYPE];
 
-	if (width > NVT_TS_MAX_SIZE || height >= NVT_TS_MAX_SIZE ||
-	    data->max_touches > NVT_TS_MAX_TOUCHES ||
-	    irq_type >= ARRAY_SIZE(nvt_ts_irq_type) ||
-	    data->buf[NVT_TS_PARAMS_CHIP_ID] != chip->chip_id) {
-		dev_err(dev, "Unsupported touchscreen parameters: %*ph\n",
-			NVT_TS_PARAMS_SIZE, data->buf);
-		return -EIO;
+		if (width > NVT_TS_MAX_SIZE || height >= NVT_TS_MAX_SIZE ||
+		    data->max_touches > NVT_TS_MAX_TOUCHES ||
+		    irq_type >= ARRAY_SIZE(nvt_ts_irq_type) ||
+		    data->buf[NVT_TS_PARAMS_CHIP_ID] != chip->chip_id) {
+			dev_err(dev, "Unsupported touchscreen parameters: %*ph\n",
+				NVT_TS_PARAMS_SIZE, data->buf);
+			return -EIO;
+		}
 	}
+	/* ======================================================== */
 
 	dev_info(dev, "Detected %dx%d touchscreen with %d max touches\n",
 		width, height, data->max_touches);
