@@ -93,6 +93,9 @@
 &i2c_1 {
 	status = "okay";
 
+	/delete-property/ dmas;
+	/delete-property/ dma-names;
+
 	typec-portc@22 {
 		compatible = "fcs,fusb302";
 		reg = <0x22>;
@@ -131,14 +134,33 @@
 
 &i2c_2 {
 	status = "okay";
+	/delete-property/ dmas;
+	/delete-property/ dma-names;
 };
 
 &i2c_3 {
-	status = "okay";
+    status = "okay";
+
+    touchscreen@1 {
+        reg = <0x01>;
+        compatible = "novatek,nt11205-ts";
+
+	interrupts-extended = <&tlmm 65 IRQ_TYPE_EDGE_FALLING>;
+
+        pinctrl-names = "default", "sleep";
+        pinctrl-0 = <&ts_int_default>;
+        pinctrl-1 = <&ts_int_sleep>;
+
+        reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
+    };
 };
+
 
 &i2c_5 {
 	status = "okay";
+
+	/delete-property/ dmas;
+	/delete-property/ dma-names;
 
 	pn553: nfc@28 {
 		compatible = "nxp,pn553", "nxp,nxp-nci-i2c";
