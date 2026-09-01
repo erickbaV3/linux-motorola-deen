@@ -179,7 +179,7 @@ static void sim_remove(struct mipi_dsi_device *dsi)
 }
 
 static const struct of_device_id sim_of_match[] = {
-	{ .compatible = "sim" }, // FIXME
+	{ .compatible = "motorola,deen-nova-hd" }, // FIXME
 	{ /* sentinel */ }
 };
 MODULE_DEVICE_TABLE(of, sim_of_match);

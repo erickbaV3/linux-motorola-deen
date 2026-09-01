@@ -143,7 +143,7 @@
 
     touchscreen@1 {
         reg = <0x01>;
-        compatible = "novatek,nt11205-ts";
+        compatible = "novatek,nt36672a-ts";
 
 	interrupts-extended = <&tlmm 65 IRQ_TYPE_EDGE_FALLING>;
 
@@ -183,17 +183,44 @@
 	status = "okay";
 };
 
+&mdss {
+	status = "okay";
+};
+
 &mdss_dsi0 {
+	status = "okay";
+
 	vdda-supply = <&pm8953_s3>;
 	vddio-supply = <&pm8953_l6>;
+
+	panel: panel@0 {
+	compatible = "motorola,deen-nova-hd";
+	reg = <0>;
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&panel_default>;
+
+	reset-gpios = <&tlmm 61 GPIO_ACTIVE_LOW>;
+
+	port {
+		panel_in: endpoint {
+			remote-endpoint = <&mdss_dsi0_out>;
+			};
+		};
+	};
 };
 
 &mdss_dsi0_out {
 	data-lanes = <0 1 2 3>;
+	remote-endpoint = <&panel_in>;
+
+	status = "okay";
 };
 
 &mdss_dsi0_phy {
 	vcca-supply = <&pm8953_l3>;
+
+	status = "okay";
 };
 
 &mpss {
@@ -434,6 +461,13 @@
 		bias-pull-down;
 		output-low;
 		drive-strength = <2>;
+	};
+
+	panel_default: panel-default-state {
+		pins = "gpio61";
+		function = "gpio";
+		drive-strength = <8>;
+		bias-disable;
 	};
 
 	ts_int_default: ts-int-default-state {
