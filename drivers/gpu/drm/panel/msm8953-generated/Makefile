@@ -28,6 +28,7 @@ obj-$(CONFIG_DRM_PANEL_MDSS_OTM1911_FHDPLUS) += panel-mdss-otm1911-fhdplus.o
 obj-$(CONFIG_DRM_PANEL_MDSS_R63350) += panel-mdss-r63350.o
 obj-$(CONFIG_DRM_PANEL_MOTOROLA_ALI_BOE) += panel-motorola-ali-boe.o
 obj-$(CONFIG_DRM_PANEL_MOTOROLA_ALI_TIANMA) += panel-motorola-ali-tianma.o
+obj-$(CONFIG_DRM_PANEL_MOTOROLA_DEEN_NOVATEK) += panel-motorola-deen-novatek.o
 obj-$(CONFIG_DRM_PANEL_MOTOROLA_OCEAN_622_OFILM) += panel-motorola-ocean-622-ofilm.o
 obj-$(CONFIG_DRM_PANEL_MOTOROLA_OCEAN_622_TIANMA) += panel-motorola-ocean-622-tianma.o
 obj-$(CONFIG_DRM_PANEL_MOTOROLA_OCEAN_NT36672A_CSOT) += panel-motorola-ocean-nt36672a-csot.o
