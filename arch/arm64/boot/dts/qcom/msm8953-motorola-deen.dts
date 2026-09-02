@@ -16,6 +16,16 @@
 	compatible = "motorola,deen", "qcom,msm8953";
 	chassis-type = "handset";
 
+	
+	battery: battery {
+		compatible = "simple-battery";
+
+		charge-full-design-microamp-hours = <3000000>;
+		constant-charge-current-max-microamp = <2000000>;
+		voltage-min-design-microvolt = <3200000>;
+		voltage-max-design-microvolt = <4400000>;
+	};
+
 	chosen {
 
 		stdout-path = "serial0";
@@ -226,6 +236,17 @@
 &mpss {
 	pll-supply = <&pm8953_l7>;
 
+	status = "okay";
+};
+
+&pmi8950_fg {
+	monitored-battery = <&battery>;
+	power-supplies = <&pmi8950_smbcharger>;
+	status = "okay";
+};
+
+&pmi8950_smbcharger {
+	monitored-battery = <&battery>;
 	status = "okay";
 };
 
